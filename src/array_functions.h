@@ -62,7 +62,6 @@ int writeArraytoFile(const std::string &outputfilename);
  * Sort myEntryArray based on so enum value.
  * You must provide a solution that handles alphabetic sorting (A-Z)
  * The presence of the enum implies a switch statement based on its value
- * You are provided with a myentry compare function in the cpp file
  */
 void sortArray(constants::sortOrder so);
 
