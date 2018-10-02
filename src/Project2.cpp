@@ -47,6 +47,7 @@ bool does_file_exist(const std::string &file_name){
 	std::ifstream fle(file_name);
 	return fle.good();
 }
+
 //runs a diff command, I'm using (GNU diffutils) 3.3
 //this code cadged from stack overflow
 bool diff_files(string testoutput,string correctfile, string testnumb = "" ){
@@ -76,7 +77,6 @@ bool diff_files(string testoutput,string correctfile, string testnumb = "" ){
 //gets rid of the legacy .out files
 void remove_file_debris(){
 	popen("rm ./output/*.out", "r");
-	popen("rm ./data/nonexistantfile", "r");
 }
 
 //worth 17 points
@@ -211,7 +211,7 @@ void test_system(){
 	if (does_file_exist(TEST_DATA_FULL_OUT))
 		EXPECT_EQ(true,diff_files(TEST_DATA_FULL_OUT,TEST_DATA_FULL_PROCESSED_SORTED),"32",FIFTEEN_POINTS);
 	else
-		cout<<"ERROR 32 "<<TEST_DATA_FULL_OUT<< " does not exist"<<endl;		
+		cout<<"ERROR 32 "<<TEST_DATA_FULL_OUT<< " does not exist"<<endl;
 }
 
 //============================================================================
