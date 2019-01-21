@@ -41,6 +41,7 @@ bool strip_unwanted_chars(string &mystring){
 	strip_char(mystring,'\r');
 	strip_char(mystring,'.');
 	strip_char(mystring,' ');
+	strip_char(mystring,',');
 	return (mystring.length()>0);
 }
 
