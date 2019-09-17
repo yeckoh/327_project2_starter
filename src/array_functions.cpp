@@ -10,8 +10,8 @@
 //============================================================================
 #include <iostream>
 #include <fstream>
-//#include "array_functions.h"
 #include "constants.h"
+#include "array_functions.h"
 
 using namespace constants;
 using namespace std;
@@ -66,9 +66,10 @@ bool processFile(fstream &myfstream) {
 	string line = "";
 	while(getline(myfstream,line)) {
 		// reading in
-		cout << line << endl;
+		processLine(line);
 	}
-	myfstream.close();
+	//myfstream.close();
+	closeFile(myfstream);
 	return SUCCESS;
 }
 
@@ -88,15 +89,14 @@ void processToken(string &token) {
 /*if you are debugging the file must be in the project parent directory
   in this case Project2 with the .project and .cProject files*/
 bool openFile(std::fstream& myfile, const std::string& myFileName,
-		std::ios_base::openmode mode = std::ios_base::in) {
+		std::ios_base::openmode mode) {
 	myfile.open(myFileName, mode);
 	return myfile.is_open();
 }
 
 /*iff myfile is open then close it*/
 void closeFile(std::fstream& myfile) {
-
-	return;
+	return myfile.close();
 }
 
 /* serializes all content in myEntryArray to file outputfilename
