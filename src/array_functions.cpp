@@ -100,7 +100,7 @@ void processToken(string &token) {
 /*if you are debugging the file must be in the project parent directory
  in this case Project2 with the .project and .cProject files*/
 bool openFile(fstream &myfile, const string &myFileName, ios_base::openmode mode) {
-	myfile.open(myFileName, mode);
+	myfile.open(myFileName.c_str(), mode);
 	return myfile.is_open();
 }
 
@@ -115,7 +115,7 @@ void closeFile(std::fstream &myfile) {
  * 			SUCCESS if all data is written and outputfilename closes OK
  * */
 int writeArraytoFile(const string &outputfilename) {
-	fstream fout(outputfilename);
+	fstream fout;
 	if(!openFile(fout, outputfilename, ios_base::out))
 		return FAIL_FILE_DID_NOT_OPEN;
 	if(dictionary_size == 0)
@@ -123,7 +123,6 @@ int writeArraytoFile(const string &outputfilename) {
 
 	for(unsigned int i = 0;i < dictionary_size;i++) {
 		fout << dictionary[i].word << " " << dictionary[i].number_occurences << "\n";
-		cout << dictionary[i].word << " " << dictionary[i].number_occurences << "\n";
 	}
 	closeFile(fout);
 	return SUCCESS;
