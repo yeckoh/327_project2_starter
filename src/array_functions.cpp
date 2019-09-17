@@ -9,6 +9,7 @@
 //	TODO add necessary includes here
 //============================================================================
 //#include <iostream>
+#include <string.h>
 #include <fstream>
 #include <sstream>
 #include "constants.h"
@@ -92,7 +93,8 @@ void processToken(string &token) {
 	strip_unwanted_chars(token);
 	bool exists_in_dict = false;
 	for(unsigned int i = 0;i <= dictionary_size;i++) {
-		if(token == dictionary[i].word && token != "") {
+		//if(token == dictionary[i].word && token != "") {
+		if(strcasecmp(token.c_str(),dictionary[i].word.c_str()) == 0 && token != "") {
 			++dictionary[i].number_occurences;
 			exists_in_dict = true;
 		}
