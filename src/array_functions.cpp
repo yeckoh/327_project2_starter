@@ -1,11 +1,13 @@
 /*
  * functionstocomplete.cpp
  *
- *  	Created on: Sep 10, 2017
- *      Author: wchang 00960978
+ *  	Created on: Sep 16, 2019
+ *      Author: 	wchang 00960978
+ *      Prof:		K. Perkins @ CNU.edu
+ *		Assignment:	cs327 P2
  *
  *      Glad I took cs420.
- *      sorting algorithm InsertionSort is from
+ *      InsertionSort algorithm is from
  *      Intro to Design and Analysis of Algorithms 2ed by A. Levitin
  */
 #include <string.h>
@@ -97,7 +99,7 @@ void processToken(string &token) {
 
 /*if you are debugging the file must be in the project parent directory
  in this case Project2 with the .project and .cProject files*/
-bool openFile(std::fstream &myfile, const std::string &myFileName, std::ios_base::openmode mode) {
+bool openFile(fstream &myfile, const string &myFileName, ios_base::openmode mode) {
 	myfile.open(myFileName, mode);
 	return myfile.is_open();
 }
@@ -112,16 +114,16 @@ void closeFile(std::fstream &myfile) {
  * 			FAIL_NO_ARRAY_DATA if there are 0 entries in myEntryArray
  * 			SUCCESS if all data is written and outputfilename closes OK
  * */
-int writeArraytoFile(const std::string &outputfilename) {
-	fstream fout (outputfilename);
-	fout.open(outputfilename);
-	if(!openFile(fout, outputfilename, std::ios_base::out))
+int writeArraytoFile(const string &outputfilename) {
+	fstream fout(outputfilename);
+	if(!openFile(fout, outputfilename, ios_base::out))
 		return FAIL_FILE_DID_NOT_OPEN;
 	if(dictionary_size == 0)
 		return FAIL_NO_ARRAY_DATA;
 
-	for(unsigned int i = 0;i <= dictionary_size;i++) {
-		fout << dictionary[i].number_occurences << ' ' << dictionary[i].word << '\n';
+	for(unsigned int i = 0;i < dictionary_size;i++) {
+		fout << dictionary[i].word << " " << dictionary[i].number_occurences << "\n";
+		cout << dictionary[i].word << " " << dictionary[i].number_occurences << "\n";
 	}
 	closeFile(fout);
 	return SUCCESS;
@@ -132,7 +134,7 @@ int writeArraytoFile(const std::string &outputfilename) {
  * You must provide a solution that handles alphabetic sorting (A-Z)
  * The presence of the enum implies a switch statement based on its value
  */
-void sortArray(constants::sortOrder so) {
+void sortArray(sortOrder so) {
 
 	entry v;
 	int j = 0;
@@ -145,7 +147,7 @@ void sortArray(constants::sortOrder so) {
 		for(unsigned int i = 1; i < dictionary_size;i++) {
 			v = dictionary[i];
 			j = i-1;
-			while (j >= 0 && dictionary[j].word > v.word) {
+			while (j >= 0 && strcasecmp(dictionary[j].word.c_str(), v.word.c_str()) > 0) {
 				dictionary[j+1] = dictionary[j];
 				--j;
 			}
@@ -157,7 +159,7 @@ void sortArray(constants::sortOrder so) {
 		for(unsigned int i = 1; i < dictionary_size;i++) {
 			v = dictionary[i];
 			j = i-1;
-			while (j >= 0 && dictionary[j].word < v.word) {
+			while (j >= 0 && strcasecmp(dictionary[j].word.c_str(), v.word.c_str()) > 0) {
 				dictionary[j+1] = dictionary[j];
 				--j;
 			}
