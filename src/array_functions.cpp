@@ -94,7 +94,9 @@ void processToken(string &token) {
  in this case Project2 with the .project and .cProject files*/
 bool openFile(std::fstream &myfile, const std::string &myFileName,
 		std::ios_base::openmode mode) {
-	myfile.open(myFileName, mode);
+	const string str = myFileName.c_str();
+	//myfile.open(myFileName, mode);
+	myfile.open(str, mode);
 	return myfile.is_open();
 }
 
