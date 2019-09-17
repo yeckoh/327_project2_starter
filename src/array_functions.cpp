@@ -1,18 +1,26 @@
-/*
- * functionstocomplete.cpp
- *
- *  	Created on: Sep 16, 2019
+/*//============================================================================
+ * 		File:		array_functions.cpp
+ *  	Created: 	Sep 16, 2019
+ *  	LModified:	17 Sept 2k19
  *      Author: 	wchang 00960978
  *      Prof:		K. Perkins @ CNU.edu
  *		Assignment:	cs327 P2
+ *		Desc:
+ *			File IO functions to read files,
+ *			parse words followed by their count,
+ *			and write to a file from a couple of sorting methods.
  *
- *      Glad I took cs420.
- *      InsertionSort algorithm is from
- *      Intro to Design and Analysis of Algorithms 2ed by A. Levitin
- */
+ *		Notes:
+ *			Parser and sorter are case insensitive.
+ *      	Glad I took cs420
+ *      	InsertionSort algorithm is adapted from
+ *      	Intro to Design and Analysis of Algorithms 2ed by A. Levitin
+ *
+ *      	cnuclasses project description mentions passing strings
+ *      	by reference for comparisons to save performance,
+ *      	not sure how you'd use strcasecmp() and .c_str() using refs
+ *///============================================================================
 #include <string.h>
-#include <fstream>
-#include <sstream>
 #include "constants.h"
 #include "utilities.h"
 #include "array_functions.h"
@@ -30,7 +38,7 @@ unsigned int dictionary_size = 0;
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
-	for(unsigned int i = 0;i <= dictionary_size;i++){
+	for (unsigned int i = 0; i <= dictionary_size; i++) {
 		dictionary[i].number_occurences = 0;
 		dictionary[i].word = "";
 	}
@@ -60,6 +68,7 @@ bool processFile(fstream &myfstream) {
 	if (!myfstream.is_open())
 		return false;
 	string line = "";
+
 	while (getline(myfstream, line)) {
 		processLine(line);
 	}
@@ -72,6 +81,7 @@ bool processFile(fstream &myfstream) {
 void processLine(string &myString) {
 	stringstream ss(myString);
 	string tempToken;
+
 	while (getline(ss, tempToken, CHAR_TO_SEARCH_FOR)) {
 		processToken(tempToken);
 	}
@@ -80,16 +90,17 @@ void processLine(string &myString) {
 
 /*Keep track of how many times each token seen*/
 void processToken(string &token) {
-	strip_unwanted_chars(token);
 	bool exists_in_dict = false;
-	for(unsigned int i = 0;i <= dictionary_size;i++) {
-		//if(token == dictionary[i].word && token != "") {
-		if(strcasecmp(token.c_str(),dictionary[i].word.c_str()) == 0 && token != "") {
+
+	strip_unwanted_chars(token);
+	for (unsigned int i = 0; i <= dictionary_size; i++) {
+		if (strcasecmp(token.c_str(), dictionary[i].word.c_str()) == 0
+				&& token != "") {
 			++dictionary[i].number_occurences;
 			exists_in_dict = true;
 		}
 	}
-	if(!exists_in_dict && token != "") {
+	if (!exists_in_dict && token != "") {
 		dictionary[dictionary_size].word = token;
 		++dictionary[dictionary_size].number_occurences;
 		++dictionary_size;
@@ -116,12 +127,13 @@ void closeFile(std::fstream &myfile) {
  * */
 int writeArraytoFile(const string &outputfilename) {
 	fstream fout;
-	if(!openFile(fout, outputfilename, ios_base::out))
+
+	if (!openFile(fout, outputfilename, ios_base::out))
 		return FAIL_FILE_DID_NOT_OPEN;
-	if(dictionary_size == 0)
+	if (dictionary_size == 0)
 		return FAIL_NO_ARRAY_DATA;
 
-	for(unsigned int i = 0;i < dictionary_size;i++) {
+	for (unsigned int i = 0; i < dictionary_size; i++) {
 		fout << dictionary[i].word << " " << dictionary[i].number_occurences << "\n";
 	}
 	closeFile(fout);
@@ -134,47 +146,51 @@ int writeArraytoFile(const string &outputfilename) {
  * The presence of the enum implies a switch statement based on its value
  */
 void sortArray(sortOrder so) {
-
 	entry v;
 	int j = 0;
 
-	switch(so) {
+	switch (so) {
 	case NONE:
 		break;
 	case ASCENDING:
 		// InsertionSort
-		for(unsigned int i = 1; i < dictionary_size;i++) {
+		for (unsigned int i = 1; i < dictionary_size; i++) {
 			v = dictionary[i];
-			j = i-1;
-			while (j >= 0 && strcasecmp(dictionary[j].word.c_str(), v.word.c_str()) > 0) {
-				dictionary[j+1] = dictionary[j];
+			j = i - 1;
+			while (j >= 0
+					&& strcasecmp(dictionary[j].word.c_str(), v.word.c_str())
+							> 0) {
+				dictionary[j + 1] = dictionary[j];
 				--j;
 			}
-			dictionary[j+1] = v;
+			dictionary[j + 1] = v;
 		}
 		break;
 	case DESCENDING:
 		// InsertionSort
-		for(unsigned int i = 1; i < dictionary_size;i++) {
+		for (unsigned int i = 1; i < dictionary_size; i++) {
 			v = dictionary[i];
-			j = i-1;
-			while (j >= 0 && strcasecmp(dictionary[j].word.c_str(), v.word.c_str()) > 0) {
-				dictionary[j+1] = dictionary[j];
+			j = i - 1;
+			while (j >= 0
+					&& strcasecmp(dictionary[j].word.c_str(), v.word.c_str())
+							> 0) {
+				dictionary[j + 1] = dictionary[j];
 				--j;
 			}
-			dictionary[j+1] = v;
+			dictionary[j + 1] = v;
 		}
 		break;
 	case NUMBER_OCCURRENCES:
 		// InsertionSort
-		for(unsigned int i = 1; i < dictionary_size;i++) {
+		for (unsigned int i = 1; i < dictionary_size; i++) {
 			v = dictionary[i];
-			j = i-1;
-			while (j >= 0 && dictionary[j].number_occurences < v.number_occurences) {
-				dictionary[j+1] = dictionary[j];
+			j = i - 1;
+			while (j >= 0
+					&& dictionary[j].number_occurences < v.number_occurences) {
+				dictionary[j + 1] = dictionary[j];
 				--j;
 			}
-			dictionary[j+1] = v;
+			dictionary[j + 1] = v;
 		}
 		break;
 	default:
