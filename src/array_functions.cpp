@@ -8,10 +8,13 @@
 //============================================================================
 //	TODO add necessary includes here
 //============================================================================
-#include <iostream>
+//#include <iostream>
 #include <fstream>
+#include <sstream>
 #include "constants.h"
+#include "utilities.h"
 #include "array_functions.h"
+
 
 using namespace constants;
 using namespace std;
@@ -73,7 +76,11 @@ bool processFile(fstream &myfstream) {
 /*take 1 line and extract all the tokens from it
  feed each token to processToken for recording*/
 void processLine(string &myString) {
-
+	stringstream ss(myString);
+	string tempToken;
+	while (getline(ss, tempToken, CHAR_TO_SEARCH_FOR)){
+		processToken(tempToken);
+	}
 	return;
 }
 
