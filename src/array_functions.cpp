@@ -9,7 +9,10 @@
 //	TODO add necessary includes here
 //============================================================================
 #include <iostream>
+#include <fstream>
+//#include "array_functions.h"
 #include "constants.h"
+
 using namespace constants;
 using namespace std;
 
@@ -18,14 +21,16 @@ using namespace std;
 //============================================================================
 //TODO define a structure to track words and number of times they occur
 struct entry {
-	string word;
-	int number_occurences;
+	string word = "";
+	int number_occurences = 0;
 };
+
 //TODO add a global array of entry structs (global to this file)
-
+static entry dictionary[MAX_WORDS];
 //TODO add variable to keep track of next available slot in array
+unsigned int dictionary_sz = 0;
 
-//TODO define all functions in header file
+//TODO define all functions from header file
 
 //TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
 
@@ -34,45 +39,41 @@ struct entry {
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
-
 	return;
 }
 
 //how many unique words are in array
 int getArraySize() {
-
-	return FAIL;
+	return dictionary_sz;
 }
 
 //get data at a particular location
 string getArrayWordAt(int i) {
-
-	return "";
+	return dictionary[i].word;
 }
 
 int getArrayWord_NumbOccur_At(int i) {
-
-	return FAIL;
+	return dictionary[i].number_occurences;
 }
 
 /*loop through whole file, one line at a time
  * call processLine on each line
  * returns false: myfstream is not open
  *         true: otherwise*/
-bool processFile(std::fstream &myfstream) {
+bool processFile(fstream &myfstream) {
 
 	return FAIL;
 }
 
 /*take 1 line and extract all the tokens from it
 feed each token to processToken for recording*/
-void processLine(std::string &myString) {
+void processLine(string &myString) {
 
 	return;
 }
 
 /*Keep track of how many times each token seen*/
-void processToken(std::string &token) {
+void processToken(string &token) {
 
 	return;
 }
@@ -81,7 +82,6 @@ void processToken(std::string &token) {
   in this case Project2 with the .project and .cProject files*/
 bool openFile(std::fstream& myfile, const std::string& myFileName,
 		std::ios_base::openmode mode = std::ios_base::in) {
-
 	return FAIL;
 }
 
