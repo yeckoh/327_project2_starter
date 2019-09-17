@@ -1,14 +1,13 @@
 /*
  * functionstocomplete.cpp
  *
- *  Created on: Sep 10, 2017
- *      Author: keith
+ *  	Created on: Sep 10, 2017
+ *      Author: wchang 00960978
+ *
+ *      Glad I took cs420.
+ *      sorting algorithm InsertionSort is from
+ *      Intro to Design and Analysis of Algorithms 2ed by A. Levitin
  */
-
-//============================================================================
-//	TODO add necessary includes here
-//============================================================================
-//#include <iostream>
 #include <string.h>
 #include <fstream>
 #include <sstream>
@@ -16,27 +15,16 @@
 #include "utilities.h"
 #include "array_functions.h"
 
-
 using namespace constants;
 using namespace std;
 
-//============================================================================
-//	stuff you will need
-//============================================================================
-//TODO define a structure to track words and number of times they occur
 struct entry {
 	string word = "";
 	int number_occurences = 0;
 };
 
-//TODO add a global array of entry structs (global to this file)
 static entry dictionary[MAX_WORDS];
-//TODO add variable to keep track of next available slot in array
 unsigned int dictionary_size = 0;
-
-//TODO define all functions from header file
-
-//TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
@@ -109,10 +97,7 @@ void processToken(string &token) {
 
 /*if you are debugging the file must be in the project parent directory
  in this case Project2 with the .project and .cProject files*/
-bool openFile(std::fstream &myfile, const std::string &myFileName,
-		std::ios_base::openmode mode) {
-	//const string str = myFileName.c_str();
-	//myfile.open(str, mode);
+bool openFile(std::fstream &myfile, const std::string &myFileName, std::ios_base::openmode mode) {
 	myfile.open(myFileName, mode);
 	return myfile.is_open();
 }
@@ -148,12 +133,51 @@ int writeArraytoFile(const std::string &outputfilename) {
  * The presence of the enum implies a switch statement based on its value
  */
 void sortArray(constants::sortOrder so) {
-	switch(so){
-	case sortOrder::NONE: break;
-	case sortOrder::ASCENDING: break;
-	case sortOrder::DESCENDING: break;
-	case sortOrder::NUMBER_OCCURRENCES: break;
-	default: break;
+
+	entry v;
+	int j = 0;
+
+	switch(so) {
+	case NONE:
+		break;
+	case ASCENDING:
+		// InsertionSort
+		for(unsigned int i = 1; i < dictionary_size;i++) {
+			v = dictionary[i];
+			j = i-1;
+			while (j >= 0 && dictionary[j].word > v.word) {
+				dictionary[j+1] = dictionary[j];
+				--j;
+			}
+			dictionary[j+1] = v;
+		}
+		break;
+	case DESCENDING:
+		// InsertionSort
+		for(unsigned int i = 1; i < dictionary_size;i++) {
+			v = dictionary[i];
+			j = i-1;
+			while (j >= 0 && dictionary[j].word < v.word) {
+				dictionary[j+1] = dictionary[j];
+				--j;
+			}
+			dictionary[j+1] = v;
+		}
+		break;
+	case NUMBER_OCCURRENCES:
+		// InsertionSort
+		for(unsigned int i = 1; i < dictionary_size;i++) {
+			v = dictionary[i];
+			j = i-1;
+			while (j >= 0 && dictionary[j].number_occurences < v.number_occurences) {
+				dictionary[j+1] = dictionary[j];
+				--j;
+			}
+			dictionary[j+1] = v;
+		}
+		break;
+	default:
+		break;
 	}
 	return;
 }
