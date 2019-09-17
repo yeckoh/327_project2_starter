@@ -100,7 +100,7 @@ void processToken(string &token) {
 	}
 	if(!exists_in_dict) {
 		dictionary[++dictionary_size].word = token;
-		++dictionary[dictionary_size].number_occurences;
+		dictionary[dictionary_size].number_occurences = 1;
 	}
 	return;
 }
@@ -126,8 +126,16 @@ void closeFile(std::fstream &myfile) {
  * 			SUCCESS if all data is written and outputfilename closes OK
  * */
 int writeArraytoFile(const std::string &outputfilename) {
+	fstream fout;
+	if(!openFile(fout, outputfilename, std::ios_base::out))
+		return FAIL_FILE_DID_NOT_OPEN;
+	if(dictionary_size == 0)
+		return FAIL_NO_ARRAY_DATA;
 
-	return FAIL;
+	// fout << "stuff\n"
+
+	closeFile(fout);
+	return SUCCESS;
 }
 
 /*
