@@ -39,10 +39,11 @@ unsigned int dictionary_size = 0;
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
-	for(unsigned int i = 0;i < dictionary_size;i++){
+	for(unsigned int i = 0;i <= dictionary_size;i++){
 		dictionary[i].number_occurences = 0;
 		dictionary[i].word = "";
 	}
+	dictionary_size = 0;
 	return;
 }
 
