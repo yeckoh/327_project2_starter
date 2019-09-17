@@ -66,15 +66,14 @@ int getArrayWord_NumbOccur_At(int i) {
  *         true: otherwise*/
 bool processFile(fstream &myfstream) {
 	if (!myfstream.is_open())
-		return FAIL;
+		return false;
 	string line = "";
 	while (getline(myfstream, line)) {
-		// reading in
 		processLine(line);
 	}
 	//myfstream.close();
 	closeFile(myfstream);
-	return SUCCESS;
+	return true;
 }
 
 /*take 1 line and extract all the tokens from it
@@ -82,7 +81,7 @@ bool processFile(fstream &myfstream) {
 void processLine(string &myString) {
 	stringstream ss(myString);
 	string tempToken;
-	while (getline(ss, tempToken, CHAR_TO_SEARCH_FOR)){
+	while (getline(ss, tempToken, CHAR_TO_SEARCH_FOR)) {
 		processToken(tempToken);
 	}
 	return;
@@ -126,14 +125,16 @@ void closeFile(std::fstream &myfile) {
  * 			SUCCESS if all data is written and outputfilename closes OK
  * */
 int writeArraytoFile(const std::string &outputfilename) {
-	fstream fout;
+	fstream fout (outputfilename);
+	fout.open(outputfilename);
 	if(!openFile(fout, outputfilename, std::ios_base::out))
 		return FAIL_FILE_DID_NOT_OPEN;
 	if(dictionary_size == 0)
 		return FAIL_NO_ARRAY_DATA;
 
-	// fout << "stuff\n"
-
+	for(unsigned int i = 0;i <= dictionary_size;i++) {
+		fout << dictionary[i].number_occurences << ' ' << dictionary[i].word << '\n';
+	}
 	closeFile(fout);
 	return SUCCESS;
 }
@@ -144,6 +145,12 @@ int writeArraytoFile(const std::string &outputfilename) {
  * The presence of the enum implies a switch statement based on its value
  */
 void sortArray(constants::sortOrder so) {
-
+	switch(so){
+	case sortOrder::NONE: break;
+	case sortOrder::ASCENDING: break;
+	case sortOrder::DESCENDING: break;
+	case sortOrder::NUMBER_OCCURRENCES: break;
+	default: break;
+	}
 	return;
 }
