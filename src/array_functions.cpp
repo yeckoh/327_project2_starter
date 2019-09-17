@@ -34,9 +34,6 @@ unsigned int dictionary_sz = 0;
 
 //TODO look in utilities.h for useful functions, particularly strip_unwanted_chars!
 
-
-
-
 //zero out array that tracks words and their occurrences
 void clearArray() {
 	return;
@@ -61,10 +58,10 @@ int getArrayWord_NumbOccur_At(int i) {
  * returns false: myfstream is not open
  *         true: otherwise*/
 bool processFile(fstream &myfstream) {
-	if(!myfstream.is_open())
+	if (!myfstream.is_open())
 		return FAIL;
 	string line = "";
-	while(getline(myfstream,line)) {
+	while (getline(myfstream, line)) {
 		// reading in
 		processLine(line);
 	}
@@ -74,7 +71,7 @@ bool processFile(fstream &myfstream) {
 }
 
 /*take 1 line and extract all the tokens from it
-feed each token to processToken for recording*/
+ feed each token to processToken for recording*/
 void processLine(string &myString) {
 
 	return;
@@ -87,15 +84,15 @@ void processToken(string &token) {
 }
 
 /*if you are debugging the file must be in the project parent directory
-  in this case Project2 with the .project and .cProject files*/
-bool openFile(std::fstream& myfile, const std::string& myFileName,
+ in this case Project2 with the .project and .cProject files*/
+bool openFile(std::fstream &myfile, const std::string &myFileName,
 		std::ios_base::openmode mode) {
 	myfile.open(myFileName, mode);
 	return myfile.is_open();
 }
 
 /*iff myfile is open then close it*/
-void closeFile(std::fstream& myfile) {
+void closeFile(std::fstream &myfile) {
 	return myfile.close();
 }
 
