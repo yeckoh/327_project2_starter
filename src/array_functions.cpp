@@ -61,8 +61,15 @@ int getArrayWord_NumbOccur_At(int i) {
  * returns false: myfstream is not open
  *         true: otherwise*/
 bool processFile(fstream &myfstream) {
-
-	return FAIL;
+	if(!myfstream.is_open())
+		return FAIL;
+	string line = "";
+	while(getline(myfstream,line)) {
+		// reading in
+		cout << line << endl;
+	}
+	myfstream.close();
+	return SUCCESS;
 }
 
 /*take 1 line and extract all the tokens from it
@@ -82,7 +89,8 @@ void processToken(string &token) {
   in this case Project2 with the .project and .cProject files*/
 bool openFile(std::fstream& myfile, const std::string& myFileName,
 		std::ios_base::openmode mode = std::ios_base::in) {
-	return FAIL;
+	myfile.open(myFileName, mode);
+	return myfile.is_open();
 }
 
 /*iff myfile is open then close it*/
