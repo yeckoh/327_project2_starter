@@ -71,7 +71,6 @@ bool processFile(fstream &myfstream) {
 	while (getline(myfstream, line)) {
 		processLine(line);
 	}
-	//myfstream.close();
 	closeFile(myfstream);
 	return true;
 }
@@ -90,19 +89,17 @@ void processLine(string &myString) {
 /*Keep track of how many times each token seen*/
 void processToken(string &token) {
 	strip_unwanted_chars(token);
-	//cout << "A_size:" << dictionary_size << "        token:" << token << endl;
-	//cout << "dictionary0:" << dictionary[0].word << endl;
 	bool exists_in_dict = false;
 	for(unsigned int i = 0;i <= dictionary_size;i++) {
-		if(token == dictionary[i].word) {
-			//cout << "it was a true match\n";
+		if(token == dictionary[i].word && token != "") {
 			++dictionary[i].number_occurences;
 			exists_in_dict = true;
 		}
 	}
 	if(!exists_in_dict && token != "") {
-		dictionary[++dictionary_size].word = token;
-		dictionary[dictionary_size].number_occurences = 1;
+		dictionary[dictionary_size].word = token;
+		++dictionary[dictionary_size].number_occurences;
+		++dictionary_size;
 	}
 	return;
 }
