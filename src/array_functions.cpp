@@ -31,7 +31,7 @@ struct entry {
 //TODO add a global array of entry structs (global to this file)
 static entry dictionary[MAX_WORDS];
 //TODO add variable to keep track of next available slot in array
-unsigned int dictionary_sz = 0;
+unsigned int dictionary_size = 0;
 
 //TODO define all functions from header file
 
@@ -39,12 +39,16 @@ unsigned int dictionary_sz = 0;
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
+	for(unsigned int i = 0;i < dictionary_size;i++){
+		dictionary[i].number_occurences = 0;
+		dictionary[i].word = "";
+	}
 	return;
 }
 
 //how many unique words are in array
 int getArraySize() {
-	return dictionary_sz;
+	return dictionary_size;
 }
 
 //get data at a particular location
@@ -86,7 +90,18 @@ void processLine(string &myString) {
 
 /*Keep track of how many times each token seen*/
 void processToken(string &token) {
-
+	strip_unwanted_chars(token);
+	bool exists_in_dict = false;
+	for(unsigned int i = 0;i < dictionary_size;i++) {
+		if(token == dictionary[i].word) {
+			++dictionary[i].number_occurences;
+			exists_in_dict = true;
+		}
+	}
+	if(!exists_in_dict) {
+		dictionary[++dictionary_size].word = token;
+		++dictionary[dictionary_size].number_occurences;
+	}
 	return;
 }
 
@@ -94,9 +109,9 @@ void processToken(string &token) {
  in this case Project2 with the .project and .cProject files*/
 bool openFile(std::fstream &myfile, const std::string &myFileName,
 		std::ios_base::openmode mode) {
-	const string str = myFileName.c_str();
-	//myfile.open(myFileName, mode);
-	myfile.open(str, mode);
+	//const string str = myFileName.c_str();
+	//myfile.open(str, mode);
+	myfile.open(myFileName, mode);
 	return myfile.is_open();
 }
 
