@@ -96,6 +96,8 @@ void processToken(string &token) {
 		}
 	}
 	if (!exists_in_dict && token != "") {
+		if (dictionary_size == MAX_WORDS)
+			return; // ideally send an error code, no_more_dictionary_space
 		dictionary[dictionary_size].word = token;
 		++dictionary[dictionary_size].number_occurences;
 		++dictionary_size;
