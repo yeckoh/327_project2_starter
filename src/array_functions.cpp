@@ -34,10 +34,6 @@ unsigned int dictionary_size = 0;
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
-	for (unsigned int i = 0; i < dictionary_size; i++) {
-		dictionary[i].number_occurences = 0;
-		dictionary[i].word = "";
-	}
 	dictionary_size = 0;
 	return;
 }
@@ -89,18 +85,19 @@ void processToken(string &token) {
 	bool exists_in_dict = false;
 
 	strip_unwanted_chars(token);
+	if (token == "")
+		return;
 	for (unsigned int i = 0; i < dictionary_size; i++) {
 		if (strcasecmp(token.c_str(), dictionary[i].word.c_str()) == 0) {
 			++dictionary[i].number_occurences;
 			exists_in_dict = true;
 		}
 	}
-	if (!exists_in_dict && token != "") {
+	if (!exists_in_dict) {
 		if (dictionary_size == MAX_WORDS)
 			return; // ideally send an error code, no_more_dictionary_space
 		dictionary[dictionary_size].word = token;
-		++dictionary[dictionary_size].number_occurences;
-		++dictionary_size;
+		dictionary[dictionary_size++].number_occurences = 1;
 	}
 	return;
 }
