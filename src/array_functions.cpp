@@ -15,10 +15,6 @@
  *      	Glad I took cs420
  *      	InsertionSort algorithm is adapted from
  *      	Intro to Design and Analysis of Algorithms 2ed by A. Levitin
- *
- *      	cnuclasses project description mentions passing strings
- *      	by reference for comparisons to save performance,
- *      	not sure how you'd use strcasecmp() and .c_str() using refs
  *///============================================================================
 #include <string.h>
 #include "constants.h"
@@ -38,7 +34,7 @@ unsigned int dictionary_size = 0;
 
 //zero out array that tracks words and their occurrences
 void clearArray() {
-	for (unsigned int i = 0; i <= dictionary_size; i++) {
+	for (unsigned int i = 0; i < dictionary_size; i++) {
 		dictionary[i].number_occurences = 0;
 		dictionary[i].word = "";
 	}
@@ -80,7 +76,7 @@ bool processFile(fstream &myfstream) {
  feed each token to processToken for recording*/
 void processLine(string &myString) {
 	stringstream ss(myString);
-	string tempToken;
+	string tempToken = "";
 
 	while (getline(ss, tempToken, CHAR_TO_SEARCH_FOR)) {
 		processToken(tempToken);
@@ -93,9 +89,8 @@ void processToken(string &token) {
 	bool exists_in_dict = false;
 
 	strip_unwanted_chars(token);
-	for (unsigned int i = 0; i <= dictionary_size; i++) {
-		if (strcasecmp(token.c_str(), dictionary[i].word.c_str()) == 0
-				&& token != "") {
+	for (unsigned int i = 0; i < dictionary_size; i++) {
+		if (strcasecmp(token.c_str(), dictionary[i].word.c_str()) == 0) {
 			++dictionary[i].number_occurences;
 			exists_in_dict = true;
 		}
@@ -116,7 +111,7 @@ bool openFile(fstream &myfile, const string &myFileName, ios_base::openmode mode
 }
 
 /*iff myfile is open then close it*/
-void closeFile(std::fstream &myfile) {
+void closeFile(fstream &myfile) {
 	return myfile.close();
 }
 
@@ -157,9 +152,7 @@ void sortArray(sortOrder so) {
 		for (unsigned int i = 1; i < dictionary_size; i++) {
 			v = dictionary[i];
 			j = i - 1;
-			while (j >= 0
-					&& strcasecmp(dictionary[j].word.c_str(), v.word.c_str())
-							> 0) {
+			while (j >= 0 && strcasecmp(dictionary[j].word.c_str(), v.word.c_str()) > 0) {
 				dictionary[j + 1] = dictionary[j];
 				--j;
 			}
@@ -171,9 +164,7 @@ void sortArray(sortOrder so) {
 		for (unsigned int i = 1; i < dictionary_size; i++) {
 			v = dictionary[i];
 			j = i - 1;
-			while (j >= 0
-					&& strcasecmp(dictionary[j].word.c_str(), v.word.c_str())
-							> 0) {
+			while (j >= 0 && strcasecmp(dictionary[j].word.c_str(), v.word.c_str()) > 0) {
 				dictionary[j + 1] = dictionary[j];
 				--j;
 			}
@@ -185,8 +176,7 @@ void sortArray(sortOrder so) {
 		for (unsigned int i = 1; i < dictionary_size; i++) {
 			v = dictionary[i];
 			j = i - 1;
-			while (j >= 0
-					&& dictionary[j].number_occurences < v.number_occurences) {
+			while (j >= 0 && dictionary[j].number_occurences < v.number_occurences) {
 				dictionary[j + 1] = dictionary[j];
 				--j;
 			}
