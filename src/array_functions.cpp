@@ -82,23 +82,19 @@ void processLine(string &myString) {
 
 /*Keep track of how many times each token seen*/
 void processToken(string &token) {
-	bool exists_in_dict = false;
-
 	strip_unwanted_chars(token);
 	if (token == "")
 		return;
 	for (unsigned int i = 0; i < dictionary_size; i++) {
 		if (strcasecmp(token.c_str(), dictionary[i].word.c_str()) == 0) {
 			++dictionary[i].number_occurences;
-			exists_in_dict = true;
+			return;
 		}
 	}
-	if (!exists_in_dict) {
-		if (dictionary_size == MAX_WORDS)
-			return; // ideally send an error code, no_more_dictionary_space
-		dictionary[dictionary_size].word = token;
-		dictionary[dictionary_size++].number_occurences = 1;
-	}
+	if (dictionary_size == MAX_WORDS)
+		return; // ideally send an error code, no_more_dictionary_space
+	dictionary[dictionary_size].word = token;
+	dictionary[dictionary_size++].number_occurences = 1;
 	return;
 }
 
