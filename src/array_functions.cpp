@@ -12,9 +12,9 @@
  *
  *		Notes:
  *			Parser and sorter are case insensitive.
- *      	Glad I took cs420
- *      	InsertionSort algorithm is adapted from
- *      	Intro to Design and Analysis of Algorithms 2ed by A. Levitin
+ *			Glad I took cs420
+ *			InsertionSort algorithm is adapted from
+ *			Intro to Design and Analysis of Algorithms 2ed by A. Levitin
  *///============================================================================
 #include <string.h>
 #include "constants.h"
@@ -45,11 +45,15 @@ int getArraySize() {
 
 //get data at a particular location
 string getArrayWordAt(int i) {
-	return dictionary[i].word;
+	if(i < dictionary_size)
+		return dictionary[i].word;
+	return "";
 }
 
 int getArrayWord_NumbOccur_At(int i) {
-	return dictionary[i].number_occurences;
+	if(i < dictionary_size)
+		return dictionary[i].number_occurences;
+	return 0;
 }
 
 /*loop through whole file, one line at a time
